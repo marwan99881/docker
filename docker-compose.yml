@@ -46,8 +46,6 @@ volumes:
 
 networks:
   hello-database-network:
-    name: hello-database-network #private
     driver: bridge
   hello_network_puplic:
-    name:  hello_network_puplic  #puplic
     driver: bridge
