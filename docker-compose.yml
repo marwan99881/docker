@@ -8,8 +8,6 @@ services:
       context: /home/ec2-user/myproject/frontend
     ports:
       - 80:80
-    volumes:
-      - ./:/app
     networks:
       - hello_network_puplic
     links:
@@ -43,8 +41,8 @@ services:
       - hello-database-network
 
 volumes:
-  hello-database
-  hello-database-config
+  - hello-database
+  - hello-database-config
 
 networks:
   hello-database-network:
