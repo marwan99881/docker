@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  web:
+    image: dockerfile2
+    container_name: web 
+    build:
+      context: /home/ec2-user/myproject/frontend
+    ports:
+      - 80:80
+    volumes:
+      - ./:/app
+    networks:
+      - hello_network_puplic
+    links:
+      - "hello-db:database"
+
+  API:
+    image: dockerfile
+    container_name: API
+    build:
+      context: /home/ec2-user/myproject/backend
+    ports:
+      - 3001:3001
+    environment:
+      - User ID = user;Password=Helloflask@1;Server=postgres;Port=5432;Database=hello-db;Integrated Security=true;Pooling=true
+    networks:
+      - hello-database-network
+    depends_on:
+      - web
+
+  hello-db:
+    image: mysql
+    container_name: hello-db
+    ports:
+      - 5432:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=Helloflask@1
+    volumes:
+      - hello-database:/var/lib/mysql
+      - hello-database-config:/etc/mysql
+    networks:
+      - hello-database-network
+
+volumes:
+  hello-database
+  hello-database-config
+
+networks:
+  hello-database-network:
+    name: hello-database-network #private
+    driver: bridge
+  hello_network_puplic:
+    name:  hello_network_puplic  #puplic
+    driver: bridge
