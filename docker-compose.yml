@@ -41,8 +41,8 @@ services:
       - hello-database-network
 
 volumes:
-  - hello-database
-  - hello-database-config
+   hello-database:
+   hello-database-config:
 
 networks:
   hello-database-network:
